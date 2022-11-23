@@ -1,11 +1,14 @@
 package com.dcc.jpa_stream_lab.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,32 +62,47 @@ public class StreamLabService {
     {
         // Write a query that gets each product whose price is less than or equal to $100.
         // Return the list
-        return null;
+        return products.findAll().stream().filter(p->p.getPrice() <= 100).toList();
     }
 
     public List<Product> RProblemThree()
     {
         // Write a query that gets each product that CONTAINS an "s" in the products name.
         // Return the list
-    	return null;
+    	return products.findAll().stream().filter(p->p.getName().contains("s")).toList();
     }
 
-    public List<User> RProblemFour()
-    {
+    public List<User> RProblemFour(){
         // Write a query that gets all the users who registered BEFORE 2016
         // Return the list
         // Research 'java create specific date' and 'java compare dates'
         // You may need to use the helper classes imported above!
-    	
-        return null;
+        Calendar cal = Calendar.getInstance();
+        cal.set(2016, Calendar.JANUARY, 1);
+        Date date1= cal.getTime();
+        return users.findAll().stream().filter(u->u.getRegistrationDate().compareTo(date1)<0).toList();
+
+
     }
 
     public List<User> RProblemFive()
     {
         // Write a query that gets all of the users who registered AFTER 2016 and BEFORE 2018
         // Return the list
+        Calendar cal = Calendar.getInstance();
+        cal.set(2016, Calendar.JANUARY, 1);
+        Date date1= cal.getTime();
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(2018, Calendar.JANUARY, 1);
+        Date date2= cal.getTime();
 
-        return null;
+        return users.findAll().stream()
+                .filter(u->u.getRegistrationDate().compareTo(date1) > 0
+                           && u.getRegistrationDate().compareTo(date2) < 0)
+//                .filter(u->u.getRegistrationDate().compareTo(date2) < 0)
+                .toList();
+//        filter(u->(u.getRegistrationDate().compareTo(date2) < 0));
+//        filter(u->(u.getRegistrationDate().compareTo(date1)>0))
     }
 
     // <><><><><><><><> R Actions (Read) with Foreign Keys <><><><><><><><><>
@@ -102,8 +120,9 @@ public class StreamLabService {
     {
         // Write a query that retrieves all of the products in the shopping cart of the user who has the email "afton@gmail.com".
         // Return the list
-
-    	return null;
+//        User user = users.findAll().stream().filter(u->u.getEmail().equals("afton@gmail.com")).findFirst().orElse(null);
+//        List<ShoppingcartItem> shopping = shoppingcartitems.findAll().stream().filter(s->s.getUser().contains(user)).toList();
+        return null;
     }
 
     public long RProblemSeven()
